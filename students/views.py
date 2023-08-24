@@ -7,8 +7,8 @@ def add_student(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         
-        user = User(name=name, email=email)
-        user.save()
+        student = User(name=name, email=email)
+        student.save()
 
         return redirect('/')
     return render(request, 'add.html')
@@ -17,3 +17,16 @@ def add_student(request):
 def view_student(request):
     students = User.objects.all()
     return render(request, 'index.html', {'students': students})
+
+
+def edit_student(request, student_id):
+    student = User.objects.get(id=student_id)
+
+    if request.method == 'POST':
+        student.name = request.POST['name']
+        student.email = request.POST['email']
+        student.save()
+
+        return redirect('/') 
+
+    return render(request, 'edit.html', {'student': student})
