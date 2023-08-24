@@ -28,5 +28,8 @@ def edit_student(request, student_id):
         student.save()
 
         return redirect('/') 
-
     return render(request, 'edit.html', {'student': student})
+
+def delete_student(request, student_id):
+    User.objects.filter(id=student_id).delete()
+    return redirect('/') 
